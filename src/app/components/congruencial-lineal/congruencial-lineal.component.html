@@ -1,0 +1,174 @@
+<aside>
+    <form #formCongruencialLineal="ngForm" (ngSubmit)="onSubmit()">
+        <label for="xoInput">Ingresar x0</label>
+        <input name="xoInput" type="number"
+        #xoInput = "ngModel" [(ngModel)]="xi"/>
+    
+        <label for="kInput">Ingresar k</label>
+        <input name="kInput" type="number"
+        #kInput = "ngModel" [(ngModel)]="k"/>
+    
+        <label for="cInput">Ingresar c</label>
+        <input name="cInput" type="number"
+        #cInput = "ngModel" [(ngModel)]="c"/>
+    
+        <label for="gInput">Ingresar g</label>
+        <input name="gInput" type="number"
+        #gInput = "ngModel" [(ngModel)]="g"/>
+    
+        <label for="nameCantidadIntervalos">Ingrese la cantidad de intervalos</label>
+        <input name="nameCantidadIntervalos" type="number" #nameCantidadIntervalos="ngModel" 
+        [(ngModel)]="cantidadIntervalos" />
+
+        <label for="nameMin">Ingrese el porcentaje de aceptacion</label>
+        <input name="nameMin" type="number" #nameMin="ngModel" 
+        [(ngModel)]="aceptacion" />
+
+        <label for="minInput">Ingresar min</label>
+        <input name="minInput" type="number"
+        #minInput = "ngModel" [(ngModel)]="min"/>
+    
+        <label for="maxInput">Ingresar max</label>
+        <input name="maxInput" type="number"
+        #maxInput = "ngModel" [(ngModel)]="max"/>
+    
+        <input type="submit" value="Aceptar"/>
+    </form>
+</aside>
+
+<div class="classTablesDiv">
+    <h2>Congruencial Lineal</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Entradas</th>
+                <th scope="col">Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">x0</th>
+                <td>{{xi}}</td>
+            </tr>
+            <tr>
+                <th scope="row">k</th>
+                <td>{{k}}</td>
+            </tr>
+            <tr>
+                <th scope="row">c</th>
+                <td>{{c}}</td>
+            </tr>
+            <tr>
+                <th scope="row">g</th>
+                <td>{{g}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Parámetros</th>
+                <th scope="col">Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">a = 1 + 2k</th>
+                <td>{{a}}</td>
+            </tr>
+            <tr>
+                <th scope="row">m = 2^g</th>
+                <td>{{m}}</td>
+            </tr>
+        </tbody>
+    </table><table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Rango</th>
+                <th scope="col">Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Min</th>
+                <td>{{min}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Max</th>
+                <td>{{max}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">i</th>
+                <th scope="col">xi</th>
+                <th scope="col">Ri [0,1]</th>
+                <th scope="col">Ni</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let congruencialLineal of congruencialLinealList">
+                <th scope="row">{{congruencialLineal.i}}</th>
+                <td>{{congruencialLineal.xi}}</td>
+                <td>{{congruencialLineal.RiLess}}</td>
+                <td>{{congruencialLineal.NiLess}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Ri [0,1)</th>
+                <th scope="col">Ni</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let congruencialLineal of congruencialLinealList">
+                <td>{{congruencialLineal.Ri}}</td>
+                <td>{{congruencialLineal.Ni}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="Ni.length > 0;">
+        <!---- Grafica ------>
+        <app-grafica 
+        [Ni]="Ni" 
+        [cantidadIntervalos]="cantidadIntervalos"
+        (enviarFrecuencias)="enviarFrecuencias($event)">
+        </app-grafica>
+
+        <!---- Prueba de varianza ---->
+        <app-prueba-varianza 
+        [Ri]="Ri"
+        [aceptacion]="aceptacion">
+        </app-prueba-varianza>
+
+        <!---- Prueba de varianza pdta, el componente esta mal escrito xd ---->
+        <app-prueba-medias
+        [Ri]="Ri"
+        [aceptacion]="aceptacion">
+        </app-prueba-medias>
+
+        <!---- Prueba de chi cuadrado ------>
+        <app-prueba-chi-cuadrado
+        [frecuencys]="frecuencys"
+        [cantidadIntervalos]="cantidadIntervalos"
+        [aceptacion]="aceptacion">
+        </app-prueba-chi-cuadrado>
+
+        <!--- Prueba de Kolmogorov Smirnov ----->
+        <app-prueba-kolmogorov-smirnov
+        [aceptacion]="aceptacion"
+        [frecuencys]="frecuencys"
+        [cantidadIntervalos]="cantidadIntervalos">
+        </app-prueba-kolmogorov-smirnov>
+
+        <!--- Prueba de Poker ----->
+        <app-prueba-poker
+        [Ri]="Ri"
+        [aceptacion]="aceptacion">
+        </app-prueba-poker>
+    </div>
+</div>

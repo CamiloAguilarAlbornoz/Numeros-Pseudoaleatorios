@@ -1,0 +1,20 @@
+<div class="classTablesDiv">
+    <h2>Tabla de Frecuencias</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Inicial</th>
+                <th scope="col">Final</th>
+                <th scope="col">Frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let actualDataFrecuency of dataFrecuency">
+                <td>{{actualDataFrecuency[0]}}</td>
+                <td>{{actualDataFrecuency[1]}}</td>
+                <td>{{actualDataFrecuency[2]}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <canvas class="table" id="myChart" width="600" height="600"></canvas>
+</div>

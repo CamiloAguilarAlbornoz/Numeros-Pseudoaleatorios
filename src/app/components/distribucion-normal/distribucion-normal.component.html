@@ -1,0 +1,94 @@
+<aside>
+    <form #formCuadradosMedios="ngForm" (ngSubmit)="onSubmit()">
+        <label for="nameCantidadIntervalos">Ingrese la cantidad de intervalos</label>
+        <input name="nameCantidadIntervalos" type="number" #nameCantidadIntervalos="ngModel" 
+        [(ngModel)]="cantidadIntervalos" />
+
+        <label for="nameCantidadXi">Ingrese la cantidad de xi</label>
+        <input name="nameCantidadXi" type="number" #nameCantidadXi="ngModel" 
+        [(ngModel)]="cantidadXi" />
+
+        <label for="nameMin">Ingrese el porcentaje de aceptacion</label>
+        <input name="nameMin" type="number" #nameMin="ngModel" 
+        [(ngModel)]="aceptacion" />
+
+        <input type="submit" value="Aceptar">
+    </form>
+</aside>
+<div class="classTablesDiv">
+    <h2>Distribución Normal</h2>
+    <table class="table">
+        <thead>
+            <th scope="col">Ri</th>
+            <th scope="col">Ni</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let actuaDistribution of distribucionNormalList">
+                <td>{{actuaDistribution.Ri}}</td>
+                <td>{{actuaDistribution.Ni}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+            <th scope="col">Xi</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let xi of Xi">
+                <td>{{xi}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+            <th scope="col">Promedio</th>
+            <th scope="col">Desviación Estandar</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{promedio}}</td>
+                <td>{{desviacionEstandar}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="Ni.length > 0;">
+        <!---- Grafica ------>
+        <app-grafica 
+        [Ni]="Ni" 
+        [cantidadIntervalos]="cantidadIntervalos"
+        (enviarFrecuencias)="enviarFrecuencias($event)">
+        </app-grafica>
+
+        <!---- Prueba de medias ---->
+        <app-prueba-varianza 
+        [Ri]="Ri"
+        [aceptacion]="aceptacion">
+        </app-prueba-varianza>
+
+        <!---- Prueba de varianza pdta, el componente esta mal escrito xd ---->
+        <app-prueba-medias
+        [Ri]="Ri"
+        [aceptacion]="aceptacion">
+        </app-prueba-medias>
+
+        <!---- Prueba de chi cuadrado ------>
+        <app-prueba-chi-cuadrado
+        [frecuencys]="frecuencys"
+        [cantidadIntervalos]="cantidadIntervalos"
+        [aceptacion]="aceptacion">
+        </app-prueba-chi-cuadrado>
+
+        <!--- Prueba de Kolmogorov Smirnov ----->
+        <app-prueba-kolmogorov-smirnov
+        [aceptacion]="aceptacion"
+        [frecuencys]="frecuencys"
+        [cantidadIntervalos]="cantidadIntervalos">
+        </app-prueba-kolmogorov-smirnov>
+
+        <!--- Prueba de Poker ----->
+        <app-prueba-poker
+        [Ri]="Ri"
+        [aceptacion]="aceptacion">
+        </app-prueba-poker>
+    </div>
+</div>

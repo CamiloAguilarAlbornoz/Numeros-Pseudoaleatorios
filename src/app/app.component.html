@@ -1,0 +1,42 @@
+<section id="idSectionContenedorGeneral">
+    <header id="idHeaderCabecera">
+        <h1>Generación de Números Pseudoaleatorios</h1>
+    </header>
+    <nav id="idNavMenu">
+        <ul>
+            <li [routerLinkActive]="['classActive']">
+                <a [routerLink]="['cuadradosMedios']">
+                    Cuadrados Medios
+                </a>
+            </li>
+            <li [routerLinkActive]="['classActive']">
+                <a [routerLink]="['congruenlcialLineal']">
+                    Congruencial Líneal
+                </a>
+            </li>
+            <li [routerLinkActive]="['classActive']">
+                <a [routerLink]="['congruenlcialMultiplicativo']">
+                    Congruencial Multiplicativo
+                </a>
+            </li>
+            <li [routerLinkActive]="['classActive']">
+                <a [routerLink]="['distribucionUniforme']">
+                    Distribución Uniforme
+                </a>
+            </li>
+            <li [routerLinkActive]="['classActive']">
+                <a [routerLink]="['distribucionNormal']">
+                    Distribución Normal
+                </a>
+            </li>
+        </ul>
+        <div class="clearFix"></div>
+    </nav>
+    <div id="idDivContenido">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="clearFix"></div>
+    <footer>
+        Simulación por Computadores &copy;
+    </footer>
+</section>
